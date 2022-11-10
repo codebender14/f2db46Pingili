@@ -1,5 +1,5 @@
 # assignment_10_f2wb46Pingili
 
-Class Name : Function
+Class Name : Pizza
 
-Attributes : Func_Name(String), Func_Type(String), Func_Lines(number), Func_Language(String)
+Attributes : Pizza_Name(String), Pizza_Type(String), Pizza_Cost(number), Pizza_Toppings(String)
