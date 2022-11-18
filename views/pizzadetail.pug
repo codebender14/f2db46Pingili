@@ -1,0 +1,26 @@
+extends layout 
+ 
+block content 
+  h1(class = 'container-fluid p-5 bg-info text-info text-center')= title 
+ 
+  if (toShow == null) 
+    h2 No instance to Detail View 
+  else 
+    - let Pizzaid = toShow._id 
+    - let Pizza_Name = toShow.Pizza_Name 
+    - let Pizza_Type = toShow.Pizza_Type 
+    - let Pizza_Cost = toShow.Pizza_Cost 
+    - let Pizza_Toppings = toShow.Pizza_Toppings 
+    div(class='justify-content-left p-2 text-center text-dark',style='background-color:#FF5733')
+      div.row 
+        div(class='p-2 flex-fill pizzaAttr mr-3') Pizza ID is: 
+        div #{Pizzaid} 
+      div.row 
+        div(class='p-2 flex-fill pizzaAttr mr-3') Pizza Name is: 
+        div #{Pizza_Name} 
+      div.row 
+        div(class='p-2 flex-fill pizzaAttr mr-3') Pizza Cost is: 
+        div #{Pizza_Cost} 
+      div.row 
+        div(class='p-2 flex-fill pizzaAttr mr-3') Pizza Toppings is: 
+        div #{Pizza_Toppings}

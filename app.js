@@ -4,13 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var pizza = require("./models/pizza");
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
 mongoose = require('mongoose');
 mongoose.connect(connectionString,
-{useNewUrlParser: true,
-useUnifiedTopology: true});
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
 var db = mongoose.connection;
 //Bind connection to error event
@@ -44,16 +48,16 @@ app.use('/users', usersRouter);
 app.use('/pizza', appRouter);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
-app.use('/resource',resourceRouter);
+app.use('/resource', resourceRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -67,20 +71,23 @@ async function recreateDB() {
   // Delete everything
   await pizza.deleteMany();
   let instance1 = new
-    pizza({"Pizza_Name": "Pepproni", 
-    "Pizza_Type": "Non-Vegetarian", "Pizza_Cost": 3.78, 
-    "Pizza_Toppings": "Cheese"
-  });  
+    pizza({
+      "Pizza_Name": "Pepproni",
+      "Pizza_Type": "Non-Vegetarian", "Pizza_Cost": 3.78,
+      "Pizza_Toppings": "Cheese"
+    });
   let instance2 = new
-  pizza({"Pizza_Name": "Chicken", 
-  "Pizza_Type": "Non-Vegetarian", "Pizza_Cost": 8.30, 
-  "Pizza_Toppings": "Onion"
-  });
+    pizza({
+      "Pizza_Name": "Chicken",
+      "Pizza_Type": "Non-Vegetarian", "Pizza_Cost": 8.30,
+      "Pizza_Toppings": "Onion"
+    });
   let instance3 = new
-  pizza({"Pizza_Name": "Capsicum", 
-  "Pizza_Type": "Vegetarian", "Pizza_Cost": 3.25, 
-  "Pizza_Toppings": "Potato"
-  });
+    pizza({
+      "Pizza_Name": "Capsicum",
+      "Pizza_Type": "Vegetarian", "Pizza_Cost": 3.25,
+      "Pizza_Toppings": "Potato"
+    });
   instance1.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("First Application saved")
@@ -96,5 +103,36 @@ async function recreateDB() {
 }
 let reseed = true;
 if (reseed) { recreateDB(); }
+
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    Account.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+))
+
+app.use(require('express-session')({
+      secret: 'keyboard cat',
+      resave: false,
+      saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport config
+// Use the existing connection
+// The Account model
+var Account = require('./models/Account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 module.exports = app;

@@ -9,8 +9,18 @@ a {
 table, td {
   border: 1px solid;
 }
+.pizzaAttr { 
+  text-align:center;
+  background-color:#0088ff; 
+  width: 120px; 
+} 
 
 table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.mr-1 {
+  background-color:darkslategray;
+  width: 120px;
 }

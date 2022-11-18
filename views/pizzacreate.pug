@@ -1,0 +1,41 @@
+extends layout 
+ 
+block content 
+  h1(class = 'container-fluid p-5 bg-info text-danger text-center')= title 
+ 
+  form(id='pizzaForm',class='justify-content-center p-2 bg-dark text-center text-light',action="/resource/pizza", method="POST") 
+    div.form-group
+        label.pizzaAttr(for='Pizza_Name' style="margin-right: 5px;") Pizza Name 
+        input#App_Name(type='text', name='Pizza_Name' style="width:500px;")
+    br
+    div.form-group 
+        label.pizzaAttr(for='Pizza_Type' style="margin-right: 5px;") Pizza Type 
+        input#App_Company(type='text', name='Pizza_Type' style="width:500px;") 
+    br
+    div.form-group 
+        label.pizzaAttr(for='Pizza_Cost' style="margin-right: 5px;") Pizza Cost 
+        input#App_Size(type='number', name='Pizza_Cost' style="width:500px;") 
+    br
+    div.form-group 
+        label.pizzaAttr(for='Pizza_Toppings' style="margin-right: 5px;") Pizza Toppings 
+        input#App_Rating(type='number', name='Pizza_Toppings' style="width:500px;") 
+    br
+    input(class="btn btn-info" type="submit") 
+ 
+  script. 
+    document.forms['pizzaForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'POST', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Save succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Save failed " + error ) 
+      }); 
+    }); 

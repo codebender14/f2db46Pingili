@@ -1,0 +1,53 @@
+extends layout 
+ 
+block content 
+  h1(class = 'container-fluid p-5 bg-info text-danger text-center')= title 
+  
+  if (toShow == null) 
+    h2 No instance to Update View 
+  else 
+    - let Pizzaid = toShow._id 
+    - let Pizza_Name = toShow.Pizza_Name 
+    - let Pizza_Type = toShow.Pizza_Type 
+    - let Pizza_Cost = toShow.Pizza_Cost 
+    - let Pizza_Toppings = toShow.Pizza_Toppings  
+   
+    div.row(class='d-flex justify-content-center p-2 bg-dark text-center text-danger') 
+        div.mr-1(class = "p-2 flex-fill") Pizza ID is #{Pizzaid} 
+    - let actionid = "/resource/pizza/" + Pizzaid 
+    form(id='PizzaForm',class='justify-content-center p-2 bg-light text-center text-dark',action= actionid, method="PUT") 
+        div.form-group 
+            label.pizzaAttr(for='Pizza_Name' style="margin-right: 5px;") Pizza Name 
+            input#Pizza_Name(type='text', name='Pizza_Name' value = Pizza_Name style="width:500px;") 
+        br
+        div.form-group 
+            label.pizzaAttr(for='Pizza_Type' style="margin-right: 5px;") Pizza Type 
+            input#Pizza_Type(type='text', name='Pizza_Type' value = Pizza_Type style="width:500px;") 
+        br
+        div.form-group 
+            label.pizzaAttr(for='Pizza_Cost' style="margin-right: 5px;") Pizza Cost 
+            input#Pizza_Cost(type='number', name='Pizza_Cost' value = Pizza_Cost style="width:500px;") 
+        br
+        div.form-group 
+            label.pizzaAttr(for='Pizza_Toppings' style="margin-right: 5px;") Pizza Toppings 
+            input#Pizza_Toppings(type='text', name='Pizza_Toppings' value = Pizza_Toppings style="width:500px;") 
+        br
+        input(class="btn btn-info" type="submit") 
+ 
+  script. 
+    document.forms['PizzaForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'PUT', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Update succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Update failed " + error ) 
+      }); 
+    }); 
