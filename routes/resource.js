@@ -2,20 +2,20 @@ var express = require('express');
 var router = express.Router();
 // Require controller modules.
 var api_controller = require('../controllers/api');
-var Pizza_controller = require('../controllers/pizza');
+var pizza_controlers = require('../controllers/test');
 /// API ROUTE ///
 // GET resources base.
 router.get('/', api_controller.api);
 /// Pizza ROUTES ///
 // POST request for creating a Pizza.
-router.post('/pizza', Pizza_controller.pizza_create_post);
+router.post('/pizza', pizza_controlers.pizza_create_post);
 // DELETE request to delete Pizza.
-router.delete('/pizza/:id', Pizza_controller.pizza_delete);
+router.delete('/pizza/:id', pizza_controlers.pizza_delete);
 // PUT request to update Pizza.
-router.put('/pizza/:id', Pizza_controller.pizza_update_put);
+router.put('/pizza/:id', pizza_controlers.pizza_update_put);
 // GET request for one Pizza.
-router.get('/pizza/:id', Pizza_controller.pizza_detail);
+router.get('/pizza/:id', pizza_controlers.pizza_detail);
 // GET request for list of all Pizza items.
-router.get('/pizza', Pizza_controller.pizza_list);
+router.get('/pizza', pizza_controlers.pizza_list);
 
 module.exports = router;

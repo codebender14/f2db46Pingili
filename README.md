@@ -1,7 +1,9 @@
-# assignment_10_f2wb46Pingili
+# f2db14Narabathoju
 
-Class Name : Pizza
+Create a server template with the express generator.
 
-Attributes : Pizza_Name(String), Pizza_Type(String), Pizza_Cost(number), Pizza_Toppings(String)
+[Link to Repo](https://minishivani.github.io/f2db14Narabathoju/)
 
-[Render_Link](https://f2db46pingili.onrender.com/)
+[Link to Render](https://f2db14narabathoju.onrender.com)
+
+> Drinks (drinks_name(String),drinks_company(String), drinks_quantity(number))

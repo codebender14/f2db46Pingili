@@ -6,21 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
-table, td {
-  border: 1px solid;
-}
-.pizzaAttr { 
-  text-align:center;
-  background-color:#0088ff; 
-  width: 120px; 
-} 
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+button {
+  margin: 5px;
 }
 
-.mr-1 {
-  background-color:darkslategray;
+.drinksAttr {
+  background-color: aquamarine;
   width: 120px;
-}
+ }

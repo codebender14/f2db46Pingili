@@ -1,7 +1,10 @@
 extends layout
 
 block content
-  h1= title
+  //- h1= title
+  div(class='container' style="text-align: center;")
+        h1(class = 'container-fluid p-5 bg-info text-dark text-center')= title
+        button.btn(class="btn-primary btn-sm ml-1", style="margin: 5px; width: 120px;", onclick=`dispatch(\"/pizza/create\")`) Create
   - var results = [{"Pizza_Name": "Pepproni", "Pizza_Type": "Non-Vegetarian", "Pizza_Cost": 3.78, "Pizza_Toppings": "Cheese"},{"Pizza_Name": "Chicken", "Pizza_Type": "Non-Vegetarian", "Pizza_Cost": 8.30, "Pizza_Toppings": "Onion"},{"Pizza_Name": "Capsicum", "Pizza_Type": "Vegetarian", "Pizza_Cost": 3.25, "Pizza_Toppings": "Potato"}]
   //- div.container-fluid
   //-   div.row
@@ -13,7 +16,10 @@ block content
         each item in results
           - let destination = `dispatch(\"/pizza/update?id=${item._id}\")`
             div(class="row-sm-2", class="m-1") Pizza Name: #{item.Pizza_Name}<br>Pizza Type: #{item.Pizza_Type}<br>(Pizza Cost: #{item.Pizza_Cost})<br>Pizza Toppings: #{item.Pizza_Toppings}<br>
-              button.btn( class="btn-primary ml-1", onclick= destination) Update
+              //- button.btn( class="btn-primary ml-1", onclick= destination) Update
+              button.btn(class="btn-info btn-sm ml-1", style="margin: 5px; width: 120px;", onclick=`dispatch(\"/pizza/detail?id=${item._id}\")`) View
+              button.btn(class="btn-success btn-sm ml-1", style="margin: 5px; width: 120px;", onclick= `dispatch(\"/pizza/update?id=${item._id}\")`) Update
+              button.btn(class="btn-warning btn-sm ml-1", style="margin: 5px; width: 120px;", onclick= `dispatch(\"/pizza/delete?id=${item._id}\")`) Delete
   
   //- script.
   //-   function buy(index) {
@@ -24,5 +30,3 @@ block content
     function dispatch(path){
       window.location.href=path
     }
-
-  
